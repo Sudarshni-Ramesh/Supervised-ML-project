@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html >
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+<head>
+  <meta charset="UTF-8">
+  <title>TITLE</title>
+  {% load static %}
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<style>
+.back{
+  background-image:url("{% static 'image/1.jpg' %}");
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-position:center;
+  background-attachment: fixed;
+}
+.white{
+color:black;
+font-weight: 1000;
+}
+.nspace{
+margin:15px 15px 30px 30px;
+padding:7px 7px;
+background: cyan;
+width:350px
+}
+.space{
+margin:10px 30px;
+padding:7px 7px;
+background: cyan;
+width:350px
+}
+.gap{
+padding:10px 20px;
+}
+</style>
+  
+</head>
+
+<body class="back">
+ <div>
+	<div class="jumbotron">
+	<h1 style="text-align:center">CO2 EMISSION RATING BY VEHICLE</h1>
+	
+	</div>
+     <!-- Main Input For Receiving Query to our ML -->
+    <form class="form-group" action="{% url 'predict' %}"method="post">
+    	{% csrf_token %}
+		<div class="row">
+		<div class="gap col-md-6 ">
+		<label class="white" for="">Engine Size In Liters</label>
+		<input type="number" class="space form-control" step="0.0001" name="Engine Size" placeholder="Engine Size" required="required" /><br>
+
+		<label class="white"  for="">Number Of Cylinders</label>
+		<input type="number" class="space form-control" step="0.0001" name="Cylinders" placeholder="Cylinders" required="required" /><br>
+	
+		<label class="white"  for="">Transmission</label>
+		<select class="nspace form-control" name="Transmission" id="Transmission">
+		  <option value=0>AS10</option>
+		  <option value=1>A6</option>
+		  <option value=2>A7</option>
+		  <option value=3>A8</option>
+		  <option value=4>A9</option>
+		  <option value=5>AM6</option>
+		  <option value=6>AM7</option>
+		  <option value=7>AM8</option>
+		  <option value=8>AS10</option>
+		  <option value=9>AS5</option>
+		  <option value=10>AS6</option>
+		  <option value=11>AS7</option>
+		  <option value=12>AS8</option>
+		  <option value=13>AS9</option>
+		  <option value=14>AV</option>
+		  <option value=15>AV1</option>
+		  <option value=16>AV10</option>
+		  <option value=17>AV6</option>
+		  <option value=18>AV7</option>
+		  <option value=19>AV8</option>
+		  <option value=20>M5</option>
+		  <option value=21>M6</option>
+		  <option value=22>M7</option>
+		</select>
+
+		<label class="white"  for="">Fuel_Type</label>
+		<select class="nspace form-control" name="Fuel_Type" id="Fuel_Type">
+ 		  <option value=0>D - [Diesel]</option>
+          <option value=1>E - [E85 - Ethanol Fuel]</option>
+		  <option value=2>X - [Regular Gasoline]</option>
+          <option value=3>Z - [Premium Gasoline]</option>
+        </select>
+		</div>
+
+
+<div class="gap col-md-6">
+		<label class="white"  for="">Fuel Consumption at City</label>
+		<input type="number" class="space form-control" step="0.0001" name="FC_City" placeholder="FC_City" required="required" /><br>
+
+		<label class="white"  for="">Fuel Consumption at Highway</label>
+		<input type="number" class="space form-control" step="0.0001" name="FC_Hwy" placeholder="FC_Hwy" required="required" /><br>
+
+		<label class="white"  for="">Combined Fuel Consumption in Kilometer</label>
+		<input type="number" class="space form-control" step="0.0001" name="FC_Comb_km" placeholder="FC_Comb_km" required="required" /><br>
+
+		<label class="white"  for="">Combined Fuel Consumption in Miles per Imperial Gallon</label>
+		<input type="number" class="space form-control" step="0.0001" name="FC_Comb_mpg" placeholder="FC_Comb_mpg" required="required" /><br>
+
+	
+</div>
+</div>
+
+<div style="padding:2% 35%">
+  <button type="submit" class="btn btn-success btn-block" style="width:350px;padding:20px">Predict</button>		
+</div>
+      
+    </form>
+
+   <br>
+   <br>
+<div  style="background:cyan;padding:2% 40%">
+   {{ prediction_text }}
+</div>
+ </div>
+
+
+</body>
+</html>
